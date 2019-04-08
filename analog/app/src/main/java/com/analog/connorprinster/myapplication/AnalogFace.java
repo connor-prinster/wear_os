@@ -47,6 +47,8 @@ public class AnalogFace extends CanvasWatchFaceService {
      */
     private static final long INTERACTIVE_UPDATE_RATE_MS = TimeUnit.SECONDS.toMillis(1);
 
+    private int watchFaceSwitch = 0;
+
     /**
      * Handler message id for updating the time periodically in interactive mode.
      */
@@ -335,11 +337,26 @@ public class AnalogFace extends CanvasWatchFaceService {
                     // The user has started a different gesture or otherwise cancelled the tap.
                     break;
                 case TAP_TYPE_TAP:
-                    // The user has completed the tap gesture.
-                    // TODO: Add code to handle the tap gesture.
-                    Toast.makeText(getApplicationContext(), R.string.message, Toast.LENGTH_SHORT)
-                            .show();
-                    break;
+                    watchFaceSwitch++;
+                    switch(watchFaceSwitch % 3) {
+                        case 0:
+                            Toast.makeText(getApplicationContext(), "+0", Toast.LENGTH_SHORT)
+                                    .show();
+                            break;
+                        case 1:
+                            Toast.makeText(getApplicationContext(), "+1", Toast.LENGTH_SHORT)
+                                    .show();
+                            break;
+                        case 2:
+                            Toast.makeText(getApplicationContext(), "+2", Toast.LENGTH_SHORT)
+                                    .show();
+                            break;
+                    }
+//                    // The user has completed the tap gesture.
+//                    // TODO: Add code to handle the tap gesture.
+//                    Toast.makeText(getApplicationContext(), R.string.message, Toast.LENGTH_SHORT)
+//                            .show();
+//                    break;
             }
             invalidate();
         }
