@@ -20,7 +20,6 @@ import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
 import android.view.SurfaceHolder;
-import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -39,7 +38,7 @@ import java.util.concurrent.TimeUnit;
  * in the Google Watch Face Code Lab:
  * https://codelabs.developers.google.com/codelabs/watchface/index.html#0
  */
-public class AnalogFace extends CanvasWatchFaceService {
+public class WatchFace extends CanvasWatchFaceService {
 
     /*
      * Updates rate in milliseconds for interactive mode. We update once a second to advance the
@@ -60,15 +59,15 @@ public class AnalogFace extends CanvasWatchFaceService {
     }
 
     private static class EngineHandler extends Handler {
-        private final WeakReference<AnalogFace.Engine> mWeakReference;
+        private final WeakReference<WatchFace.Engine> mWeakReference;
 
-        public EngineHandler(AnalogFace.Engine reference) {
+        public EngineHandler(WatchFace.Engine reference) {
             mWeakReference = new WeakReference<>(reference);
         }
 
         @Override
         public void handleMessage(Message msg) {
-            AnalogFace.Engine engine = mWeakReference.get();
+            WatchFace.Engine engine = mWeakReference.get();
             if (engine != null) {
                 switch (msg.what) {
                     case MSG_UPDATE_TIME:
@@ -123,7 +122,7 @@ public class AnalogFace extends CanvasWatchFaceService {
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
 
-            setWatchFaceStyle(new WatchFaceStyle.Builder(AnalogFace.this)
+            setWatchFaceStyle(new WatchFaceStyle.Builder(WatchFace.this)
                     .setAcceptsTapEvents(true)
                     .build());
 
@@ -475,7 +474,7 @@ public class AnalogFace extends CanvasWatchFaceService {
             }
             mRegisteredTimeZoneReceiver = true;
             IntentFilter filter = new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED);
-            AnalogFace.this.registerReceiver(mTimeZoneReceiver, filter);
+            WatchFace.this.registerReceiver(mTimeZoneReceiver, filter);
         }
 
         private void unregisterReceiver() {
@@ -483,7 +482,7 @@ public class AnalogFace extends CanvasWatchFaceService {
                 return;
             }
             mRegisteredTimeZoneReceiver = false;
-            AnalogFace.this.unregisterReceiver(mTimeZoneReceiver);
+            WatchFace.this.unregisterReceiver(mTimeZoneReceiver);
         }
 
         /**
