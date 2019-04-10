@@ -136,7 +136,7 @@ public class AnalogFace extends CanvasWatchFaceService {
         private void initializeBackground() {
             mBackgroundPaint = new Paint();
             mBackgroundPaint.setColor(Color.BLACK);
-            mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.android_r2d2);
+            mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.preview_digital);
 
             /* Extracts colors from background image to improve watchface style. */
             Palette.from(mBackgroundBitmap).generate(new Palette.PaletteAsyncListener() {
@@ -338,31 +338,39 @@ public class AnalogFace extends CanvasWatchFaceService {
                     break;
                 case TAP_TYPE_TAP:
                     watchFaceSwitch++;
-                    switch(watchFaceSwitch % 3) {
-                        case 0:
-                            Toast.makeText(getApplicationContext(), "+0", Toast.LENGTH_SHORT)
-                                    .show();
-                            break;
-                        case 1:
-                            Toast.makeText(getApplicationContext(), "+1", Toast.LENGTH_SHORT)
-                                    .show();
-                            break;
-                        case 2:
-                            Toast.makeText(getApplicationContext(), "+2", Toast.LENGTH_SHORT)
-                                    .show();
-                            break;
-                    }
             }
             invalidate();
         }
 
         @Override
         public void onDraw(Canvas canvas, Rect bounds) {
+
+            switch(watchFaceSwitch % 3) {
+                case 0:
+                    mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.android_r2d2);
+                    drawBackground(canvas);
+                    drawWatchFace(canvas);
+                    break;
+                case 1:
+                    mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
+                    drawBackground(canvas);
+                    drawWatchFace(canvas);
+                    break;
+                case 2:
+                    drawBackground(canvas);
+                    drawWatchFace(canvas);
+                    break;
+            }
+
             long now = System.currentTimeMillis();
             mCalendar.setTimeInMillis(now);
 
             drawBackground(canvas);
             drawWatchFace(canvas);
+        }
+
+        public void drawDigital(Canvas canvas, Rect bounds) {
+
         }
 
         private void drawBackground(Canvas canvas) {
