@@ -352,11 +352,6 @@ public class AnalogFace extends CanvasWatchFaceService {
                                     .show();
                             break;
                     }
-//                    // The user has completed the tap gesture.
-//                    // TODO: Add code to handle the tap gesture.
-//                    Toast.makeText(getApplicationContext(), R.string.message, Toast.LENGTH_SHORT)
-//                            .show();
-//                    break;
             }
             invalidate();
         }
