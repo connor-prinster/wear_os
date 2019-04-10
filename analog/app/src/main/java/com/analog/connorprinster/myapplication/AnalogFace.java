@@ -344,29 +344,20 @@ public class AnalogFace extends CanvasWatchFaceService {
 
         @Override
         public void onDraw(Canvas canvas, Rect bounds) {
-
-            switch(watchFaceSwitch % 3) {
+            long now = System.currentTimeMillis();
+            mCalendar.setTimeInMillis(now);
+            switch(watchFaceSwitch % 2) {
                 case 0:
                     mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.android_r2d2);
                     drawBackground(canvas);
                     drawWatchFace(canvas);
                     break;
                 case 1:
-                    mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
-                    drawBackground(canvas);
-                    drawWatchFace(canvas);
-                    break;
-                case 2:
+                    mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.preview_digital);
                     drawBackground(canvas);
                     drawWatchFace(canvas);
                     break;
             }
-
-            long now = System.currentTimeMillis();
-            mCalendar.setTimeInMillis(now);
-
-            drawBackground(canvas);
-            drawWatchFace(canvas);
         }
 
         public void drawDigital(Canvas canvas, Rect bounds) {
