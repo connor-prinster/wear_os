@@ -353,14 +353,16 @@ public class WatchFace extends CanvasWatchFaceService {
                     break;
                 case 1:
                     mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.preview_digital);
-                    drawBackground(canvas);
-                    drawWatchFace(canvas);
+                    drawDigital(canvas, bounds);
+//                    drawWatchFace(canvas);
                     break;
             }
         }
 
         public void drawDigital(Canvas canvas, Rect bounds) {
-
+            canvas.drawRect(0, 0, bounds.width(), bounds.height(), mBackgroundPaint);
+            long now = System.currentTimeMillis();
+            mCalendar.setTimeInMillis(now);
         }
 
         private void drawBackground(Canvas canvas) {
