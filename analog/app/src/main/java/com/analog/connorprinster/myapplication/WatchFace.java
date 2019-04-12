@@ -403,16 +403,18 @@ public class WatchFace extends CanvasWatchFaceService {
 
             canvas.drawRect(0, 0, bounds.width(), bounds.height(), mBackgroundPaint);
 
-            Bitmap hilt = BitmapFactory.decodeResource(getResources(), R.drawable.lightsaber_hilt);
 
-            Paint pWhite = new Paint(Color.WHITE);
 
+            /* Blade aspect */
             Paint pRed = new Paint(Color.RED);
             pRed.setColor(Color.RED);
-            Rect blade = new Rect(0, 0, 200, 200);
+            Rect blade = new Rect(68, 162, 320, 158);
             canvas.drawRect(blade, pRed);
 
-            canvas.drawBitmap(hilt, 0, 160, pWhite);
+            /* Hilt Aspect */
+            Bitmap hilt = BitmapFactory.decodeResource(getResources(), R.drawable.lightsaber_hilt);
+            Paint pWhite = new Paint(Color.WHITE);
+            canvas.drawBitmap(hilt, 0, 149, pWhite);
 
             long now = System.currentTimeMillis();
             mCalendar.setTimeInMillis(now);
