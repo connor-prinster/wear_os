@@ -390,9 +390,14 @@ public class WatchFace extends CanvasWatchFaceService {
                     drawDigital(canvas, bounds);
                     break;
                 case 3:
-                    drawDigital(canvas, bounds);
+                    drawAbstract(canvas, bounds);
             }
         }
+
+        public void drawAbstract(Canvas canvas, Rect bounds) {
+
+        }
+
 
         public void drawDigital(Canvas canvas, Rect bounds) {
             /* Time Creation*/
@@ -407,7 +412,7 @@ public class WatchFace extends CanvasWatchFaceService {
             canvas.drawBitmap(deathStarOutline, 0, 0, pGreen);
 
             /* Blade Measuring */
-            int maxBlade = 318;
+            int maxBlade = 283;
             int minBlade = 68;
             int bladeLength = maxBlade - minBlade;
             float bladePercent = (float)mCalendar.get(Calendar.SECOND)/60;
@@ -417,6 +422,7 @@ public class WatchFace extends CanvasWatchFaceService {
             Paint pRed = new Paint(Color.RED);
             pRed.setColor(Color.RED);
             Rect blade = new Rect(minBlade, 162, minBlade + bladeLength, 158);
+//            Rect blade = new Rect(minBlade, 162, maxBlade, 158);
             canvas.drawRect(blade, pRed);
 
             /* Hilt Aspect */
