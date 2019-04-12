@@ -395,16 +395,22 @@ public class WatchFace extends CanvasWatchFaceService {
         }
 
         public void drawDigital(Canvas canvas, Rect bounds) {
-            if (isInAmbientMode()) {
-                canvas.drawColor(Color.BLACK);
-            } else {
-                canvas.drawRect(0, 0, bounds.width(), bounds.height(), mBackgroundPaint);
-            }
+//            if (isInAmbientMode()) {
+//                canvas.drawColor(Color.BLACK);
+//            } else {
+//                canvas.drawRect(0, 0, bounds.width(), bounds.height(), mBackgroundPaint);
+//            }
+
+            canvas.drawRect(0, 0, bounds.width(), bounds.height(), mBackgroundPaint);
 
             Bitmap hilt = BitmapFactory.decodeResource(getResources(), R.drawable.lightsaber_hilt);
 
-            Paint pWhite = new Paint();
-            pWhite.setColor(Color.WHITE);
+            Paint pWhite = new Paint(Color.WHITE);
+
+            Paint pRed = new Paint(Color.RED);
+            pRed.setColor(Color.RED);
+            Rect blade = new Rect(0, 0, 200, 200);
+            canvas.drawRect(blade, pRed);
 
             canvas.drawBitmap(hilt, 0, 160, pWhite);
 
