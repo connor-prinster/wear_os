@@ -395,20 +395,24 @@ public class WatchFace extends CanvasWatchFaceService {
         }
 
         public void drawDigital(Canvas canvas, Rect bounds) {
-//            if (isInAmbientMode()) {
-//                canvas.drawColor(Color.BLACK);
-//            } else {
-//                canvas.drawRect(0, 0, bounds.width(), bounds.height(), mBackgroundPaint);
-//            }
+            /* Time Creation*/
+            long now = System.currentTimeMillis();
+            mCalendar.setTimeInMillis(now);
 
+            /* Draw Initial Background */
             canvas.drawRect(0, 0, bounds.width(), bounds.height(), mBackgroundPaint);
 
-
+            /* Blade Measuring */
+            int maxBlade = 318;
+            int minBlade = 68;
+            int bladeLength = maxBlade - minBlade;
+            float bladePercent = (float)mCalendar.get(Calendar.SECOND)/60;
+            bladeLength *= bladePercent;
 
             /* Blade aspect */
             Paint pRed = new Paint(Color.RED);
             pRed.setColor(Color.RED);
-            Rect blade = new Rect(68, 162, 320, 158);
+            Rect blade = new Rect(minBlade, 162, minBlade + bladeLength, 158);
             canvas.drawRect(blade, pRed);
 
             /* Hilt Aspect */
@@ -416,14 +420,14 @@ public class WatchFace extends CanvasWatchFaceService {
             Paint pWhite = new Paint(Color.WHITE);
             canvas.drawBitmap(hilt, 0, 149, pWhite);
 
-            long now = System.currentTimeMillis();
-            mCalendar.setTimeInMillis(now);
+            /* Paint Time */
             String text = mAmbient
                     ? String.format("%d:%02d", mCalendar.get(Calendar.HOUR),
                     mCalendar.get(Calendar.MINUTE))
                     : String.format("%d:%02d", mCalendar.get(Calendar.HOUR),
                     mCalendar.get(Calendar.MINUTE));
             canvas.drawText(text, mXOffset, mYOffset, mTextPaint);
+
         }
 
         private void drawBackground(Canvas canvas) {
