@@ -400,7 +400,11 @@ public class WatchFace extends CanvasWatchFaceService {
             mCalendar.setTimeInMillis(now);
 
             /* Draw Initial Background */
-            canvas.drawRect(0, 0, bounds.width(), bounds.height(), mBackgroundPaint);
+            Paint pGreen = new Paint();
+            pGreen.setColor(Color.DKGRAY);
+            canvas.drawRect(0, 0, bounds.width(), bounds.height(), pGreen);
+            Bitmap deathStarOutline = BitmapFactory.decodeResource(getResources(), R.drawable.death_star_outline);
+            canvas.drawBitmap(deathStarOutline, 0, 0, pGreen);
 
             /* Blade Measuring */
             int maxBlade = 318;
@@ -421,11 +425,7 @@ public class WatchFace extends CanvasWatchFaceService {
             canvas.drawBitmap(hilt, 0, 149, pWhite);
 
             /* Paint Time */
-            String text = mAmbient
-                    ? String.format("%d:%02d", mCalendar.get(Calendar.HOUR),
-                    mCalendar.get(Calendar.MINUTE))
-                    : String.format("%d:%02d", mCalendar.get(Calendar.HOUR),
-                    mCalendar.get(Calendar.MINUTE));
+            String text = mAmbient ? String.format("%d:%02d", mCalendar.get(Calendar.HOUR), mCalendar.get(Calendar.MINUTE)) : String.format("%d:%02d", mCalendar.get(Calendar.HOUR), mCalendar.get(Calendar.MINUTE));
             canvas.drawText(text, mXOffset, mYOffset, mTextPaint);
 
         }
