@@ -388,8 +388,9 @@ public class WatchFace extends CanvasWatchFaceService {
                 case 1:
                     mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.preview_digital);
                     drawDigital(canvas, bounds);
-//                    drawWatchFace(canvas);
                     break;
+                case 3:
+                    drawDigital(canvas, bounds);
             }
         }
 
@@ -400,14 +401,20 @@ public class WatchFace extends CanvasWatchFaceService {
                 canvas.drawRect(0, 0, bounds.width(), bounds.height(), mBackgroundPaint);
             }
 
+            Bitmap hilt = BitmapFactory.decodeResource(getResources(), R.drawable.lightsaber_hilt);
+
+            Paint pWhite = new Paint();
+            pWhite.setColor(Color.WHITE);
+
+            canvas.drawBitmap(hilt, 0, 160, pWhite);
+
             long now = System.currentTimeMillis();
             mCalendar.setTimeInMillis(now);
-
             String text = mAmbient
                     ? String.format("%d:%02d", mCalendar.get(Calendar.HOUR),
                     mCalendar.get(Calendar.MINUTE))
-                    : String.format("%d:%02d:%02d", mCalendar.get(Calendar.HOUR),
-                    mCalendar.get(Calendar.MINUTE), mCalendar.get(Calendar.SECOND));
+                    : String.format("%d:%02d", mCalendar.get(Calendar.HOUR),
+                    mCalendar.get(Calendar.MINUTE));
             canvas.drawText(text, mXOffset, mYOffset, mTextPaint);
         }
 
