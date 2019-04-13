@@ -446,10 +446,7 @@ public class WatchFace extends CanvasWatchFaceService {
 
             /* Draw the Star Wars text */
             Bitmap starWarsText = BitmapFactory.decodeResource(getResources(), R.drawable.star_wars_text);
-            canvas.drawBitmap(starWarsText, 0, 0, pDynamic);
-//            Paint black = new Paint();
-//            black.setColor(Color.BLACK);
-//            canvas.drawText(hexedColor, mXOffset, mYOffset, black);
+            canvas.drawBitmap(starWarsText, 20, 75, pDynamic);
 
         }
 
