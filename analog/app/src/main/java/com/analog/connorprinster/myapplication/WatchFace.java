@@ -26,7 +26,9 @@ import android.view.SurfaceHolder;
 import android.view.WindowInsets;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -371,6 +373,7 @@ public class WatchFace extends CanvasWatchFaceService {
                     break;
                 case TAP_TYPE_TAP:
                     watchFaceSwitch++;
+//                    watchFaceSwitch %= 3;
             }
             invalidate();
         }
@@ -379,22 +382,74 @@ public class WatchFace extends CanvasWatchFaceService {
         public void onDraw(Canvas canvas, Rect bounds) {
             long now = System.currentTimeMillis();
             mCalendar.setTimeInMillis(now);
-            switch(watchFaceSwitch % 2) {
+            switch(watchFaceSwitch % 3) {
                 case 0:
                     mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.android_r2d2);
                     drawBackground(canvas);
                     drawWatchFace(canvas);
                     break;
                 case 1:
-                    mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.preview_digital);
                     drawDigital(canvas, bounds);
                     break;
-                case 3:
+                case 2:
+//                    mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.star_wars_text);
                     drawAbstract(canvas, bounds);
             }
         }
 
         public void drawAbstract(Canvas canvas, Rect bounds) {
+            /* Time Creation*/
+            long now = System.currentTimeMillis();
+            mCalendar.setTimeInMillis(now);
+
+            /* Generate a Color */
+            String hexedColor = "#";
+            ArrayList<String> intToHex = new ArrayList<>();
+            Collections.addAll(intToHex, "a", "b", "c", "d", "e", "f");
+            ArrayList<Integer> dateToIntegers = new ArrayList<>();
+            Collections.addAll(dateToIntegers, mCalendar.get(Calendar.SECOND), mCalendar.get(Calendar.ERA), mCalendar.get(Calendar.HOUR), mCalendar.get(Calendar.MINUTE), mCalendar.get(Calendar.SECOND), mCalendar.get(Calendar.MILLISECOND));
+            for(int i = 0; i < dateToIntegers.size(); i++) {
+                int val = dateToIntegers.get(i)%16;
+                if(val > 9) {
+                    String strVal = "";
+                    switch (val) {
+                        case 10:
+                            strVal = "a";
+                            break;
+                        case 11:
+                            strVal = "b";
+                            break;
+                        case 12:
+                            strVal = "c";
+                            break;
+                        case 13:
+                            strVal = "d";
+                            break;
+                        case 14:
+                            strVal = "e";
+                            break;
+                        case 15:
+                            strVal = "f";
+                            break;
+                    }
+                    hexedColor += strVal;
+                }
+                else {
+                    hexedColor += Integer.toString(val);
+                }
+            }
+
+            /* Set the color of the background */
+            Paint pDynamic = new Paint();
+            pDynamic.setColor(Color.parseColor(hexedColor));
+            canvas.drawRect(0, 0, bounds.width(), bounds.height(), pDynamic);
+
+            /* Draw the Star Wars text */
+            Bitmap starWarsText = BitmapFactory.decodeResource(getResources(), R.drawable.star_wars_text);
+            canvas.drawBitmap(starWarsText, 0, 0, pDynamic);
+//            Paint black = new Paint();
+//            black.setColor(Color.BLACK);
+//            canvas.drawText(hexedColor, mXOffset, mYOffset, black);
 
         }
 
@@ -405,11 +460,11 @@ public class WatchFace extends CanvasWatchFaceService {
             mCalendar.setTimeInMillis(now);
 
             /* Draw Initial Background */
-            Paint pGreen = new Paint();
-            pGreen.setColor(Color.DKGRAY);
-            canvas.drawRect(0, 0, bounds.width(), bounds.height(), pGreen);
+            Paint pDarkGray = new Paint();
+            pDarkGray.setColor(Color.DKGRAY);
+            canvas.drawRect(0, 0, bounds.width(), bounds.height(), pDarkGray);
             Bitmap deathStarOutline = BitmapFactory.decodeResource(getResources(), R.drawable.death_star_outline);
-            canvas.drawBitmap(deathStarOutline, 0, 0, pGreen);
+            canvas.drawBitmap(deathStarOutline, 0, 0, pDarkGray);
 
             /* Blade Measuring */
             int maxBlade = 283;
@@ -422,7 +477,6 @@ public class WatchFace extends CanvasWatchFaceService {
             Paint pRed = new Paint(Color.RED);
             pRed.setColor(Color.RED);
             Rect blade = new Rect(minBlade, 162, minBlade + bladeLength, 158);
-//            Rect blade = new Rect(minBlade, 162, maxBlade, 158);
             canvas.drawRect(blade, pRed);
 
             /* Hilt Aspect */
@@ -431,9 +485,8 @@ public class WatchFace extends CanvasWatchFaceService {
             canvas.drawBitmap(hilt, 0, 149, pWhite);
 
             /* Paint Time */
-            String text = mAmbient ? String.format("%d:%02d", mCalendar.get(Calendar.HOUR), mCalendar.get(Calendar.MINUTE)) : String.format("%d:%02d", mCalendar.get(Calendar.HOUR), mCalendar.get(Calendar.MINUTE));
+            String text = String.format("%d:%02d", mCalendar.get(Calendar.HOUR), mCalendar.get(Calendar.MINUTE));
             canvas.drawText(text, mXOffset, mYOffset, mTextPaint);
-
         }
 
         private void drawBackground(Canvas canvas) {
