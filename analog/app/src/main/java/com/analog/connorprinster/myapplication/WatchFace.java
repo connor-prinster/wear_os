@@ -384,9 +384,7 @@ public class WatchFace extends CanvasWatchFaceService {
             mCalendar.setTimeInMillis(now);
             switch(watchFaceSwitch % 3) {
                 case 0:
-                    mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.android_r2d2);
-                    drawBackground(canvas);
-                    drawWatchFace(canvas);
+                    drawAnalog(canvas, bounds);
                     break;
                 case 1:
                     drawDigital(canvas, bounds);
@@ -446,7 +444,7 @@ public class WatchFace extends CanvasWatchFaceService {
 
             /* Draw the Star Wars text */
             Bitmap starWarsText = BitmapFactory.decodeResource(getResources(), R.drawable.star_wars_text);
-            canvas.drawBitmap(starWarsText, 20, 75, pDynamic);
+            canvas.drawBitmap(starWarsText, 60, 85, pDynamic);
 
         }
 
@@ -484,6 +482,17 @@ public class WatchFace extends CanvasWatchFaceService {
             /* Paint Time */
             String text = String.format("%d:%02d", mCalendar.get(Calendar.HOUR), mCalendar.get(Calendar.MINUTE));
             canvas.drawText(text, mXOffset, mYOffset, mTextPaint);
+        }
+
+        public void drawAnalog(Canvas canvas, Rect bounds) {
+
+            Paint pBlack = new Paint();
+            pBlack.setColor(Color.BLACK);
+            canvas.drawRect(0, 0, bounds.width(), bounds.height(), pBlack);
+            Bitmap r2 = BitmapFactory.decodeResource(getResources(), R.drawable.android_r2d2);
+            canvas.drawBitmap(r2, 40, 40, pBlack);
+//            drawBackground(canvas);
+            drawWatchFace(canvas);
         }
 
         private void drawBackground(Canvas canvas) {
