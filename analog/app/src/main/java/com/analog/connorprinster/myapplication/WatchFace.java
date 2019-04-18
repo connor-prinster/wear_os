@@ -390,8 +390,8 @@ public class WatchFace extends CanvasWatchFaceService {
                     drawDigital(canvas, bounds);
                     break;
                 case 2:
-//                    mBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.star_wars_text);
                     drawAbstract(canvas, bounds);
+                    break;
             }
         }
 
@@ -444,7 +444,7 @@ public class WatchFace extends CanvasWatchFaceService {
 
             /* Draw the Star Wars text */
             Bitmap starWarsText = BitmapFactory.decodeResource(getResources(), R.drawable.star_wars_text);
-            canvas.drawBitmap(starWarsText, 60, 85, pDynamic);
+            canvas.drawBitmap(starWarsText, 60, 100, pDynamic);
 
         }
 
@@ -462,8 +462,8 @@ public class WatchFace extends CanvasWatchFaceService {
             canvas.drawBitmap(deathStarOutline, 0, 0, pDarkGray);
 
             /* Blade Measuring */
-            int maxBlade = 283;
-            int minBlade = 68;
+            int maxBlade = 357;
+            int minBlade = 80;
             int bladeLength = maxBlade - minBlade;
             float bladePercent = (float)mCalendar.get(Calendar.SECOND)/60;
             bladeLength *= bladePercent;
@@ -471,13 +471,13 @@ public class WatchFace extends CanvasWatchFaceService {
             /* Blade aspect */
             Paint pRed = new Paint(Color.RED);
             pRed.setColor(Color.RED);
-            Rect blade = new Rect(minBlade, 162, minBlade + bladeLength, 158);
+            Rect blade = new Rect(minBlade, 194, minBlade + bladeLength, 200);
             canvas.drawRect(blade, pRed);
 
             /* Hilt Aspect */
             Bitmap hilt = BitmapFactory.decodeResource(getResources(), R.drawable.lightsaber_hilt);
             Paint pWhite = new Paint(Color.WHITE);
-            canvas.drawBitmap(hilt, 0, 149, pWhite);
+            canvas.drawBitmap(hilt, 0, 185, pWhite);
 
             /* Paint Time */
             String text = String.format("%d:%02d", mCalendar.get(Calendar.HOUR), mCalendar.get(Calendar.MINUTE));
@@ -485,13 +485,11 @@ public class WatchFace extends CanvasWatchFaceService {
         }
 
         public void drawAnalog(Canvas canvas, Rect bounds) {
-
             Paint pBlack = new Paint();
             pBlack.setColor(Color.BLACK);
             canvas.drawRect(0, 0, bounds.width(), bounds.height(), pBlack);
             Bitmap r2 = BitmapFactory.decodeResource(getResources(), R.drawable.android_r2d2);
             canvas.drawBitmap(r2, 40, 40, pBlack);
-//            drawBackground(canvas);
             drawWatchFace(canvas);
         }
 
